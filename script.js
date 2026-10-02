@@ -1,47 +1,56 @@
-function showAlert() {
-  alert("Welcome to PPI Ghana! Explore our research and policy initiatives.");
+const menuToggle = document.querySelector(".menu-toggle");
+const primaryNav = document.querySelector(".primary-nav");
+
+if (menuToggle && primaryNav) {
+	menuToggle.addEventListener("click", () => {
+		const isExpanded = menuToggle.getAttribute("aria-expanded") === "true";
+		menuToggle.setAttribute("aria-expanded", String(!isExpanded));
+		menuToggle.setAttribute("aria-label", isExpanded ? "Open menu" : "Close menu");
+		primaryNav.classList.toggle("is-open", !isExpanded);
+	});
 }
 
-function validateForm() {
-  let name = document.getElementById("name").value;
-  let email = document.getElementById("email").value;
-  let message = document.getElementById("message").value;
-
-  if (name === "" || email === "" || message === "") {
-    alert("Please fill in all fields before submitting.");
-    return false;
-  }
-  alert("Thank you for contacting us, " + name + "!");
-  return true;
-}
-
-const button = document.getElementById("learn-more");
-const section = document.getElementById("more-info");
-
-if(button && section) {
-button.addEventListener("click", () => {
-  section.classList.toggle("show");
-  button.textContent = section.classList.contains("show") ? "Show Less" : "Learn More";
+document.querySelectorAll("[data-year]").forEach((year) => {
+	year.textContent = new Date().getFullYear();
 });
+
+const revealItems = document.querySelectorAll("[data-reveal]");
+
+if (
+	revealItems.length &&
+	"IntersectionObserver" in window &&
+	!window.matchMedia("(prefers-reduced-motion: reduce)").matches
+) {
+	document.documentElement.classList.add("motion-ready");
+	const revealObserver = new IntersectionObserver((entries, observer) => {
+		entries.forEach((entry) => {
+			if (entry.isIntersecting) {
+				entry.target.classList.add("is-visible");
+				observer.unobserve(entry.target);
+			}
+		});
+	}, { threshold: 0.15, rootMargin: "0px 0px -24px 0px" });
+
+	revealItems.forEach((item) => revealObserver.observe(item));
 }
 
-function validateForm() {
-  const name = document.getElementById('name').value.trim();
-  const email = document.getElementById('email').value.trim();
-  const message = document.getElementById('message').value.trim();
+const contactForm = document.querySelector("#contact-form");
 
-  if (!name || !email || !message) {
-    alert('Please fill in all fields before sending.');
-    return false;
-  }
-  {
-  alert(`Thank you, ${name}! Your message has been sent successfully.`);
-  return true;
-}
-
-const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-if (!emailPattern.test(email)) {
-  alert('Please enter a valid email address.');
-  return false;
-}
+if (contactForm) {
+	contactForm.addEventListener("submit", (event) => {
+		event.preventDefault();
+		const formData = new FormData(contactForm);
+		const subject = `Website enquiry: ${formData.get("topic")}`;
+		const body = [
+			`Name: ${formData.get("name")}`,
+			`Email: ${formData.get("email")}`,
+			`Topic: ${formData.get("topic")}`,
+			"",
+			formData.get("message"),
+		].join("\n");
+		const mailto = `mailto:info@ppighana.org?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+		const status = document.querySelector("#form-status");
+		status.textContent = "Your email app will open with your message addressed to info@ppighana.org.";
+		window.location.href = mailto;
+	});
 }
