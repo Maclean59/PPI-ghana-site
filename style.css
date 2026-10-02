@@ -52,10 +52,13 @@ h1 em, h2 em { color: var(--red); font-weight: 400; }
 .button-dark { background: var(--green); color: var(--white); }
 .text-link, .underlined-link { color: var(--green); font-size: 13px; font-weight: 700; }
 .text-link:hover, .underlined-link:hover { color: var(--red); }
-.hero-footnote { margin-top: 46px; display: flex; align-items: center; gap: 9px; color: var(--muted); font-size: 11px; }
+.hero-meta { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 10px; }
+.meta-chip { padding: 7px 10px; border: 1px solid rgba(21, 77, 54, .18); background: rgba(255, 255, 255, .5); color: var(--green-deep); font-size: 10px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+.hero-footnote { margin-top: 28px; display: flex; align-items: center; gap: 9px; color: var(--muted); font-size: 11px; }
 .ghana-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); box-shadow: 5px 0 0 var(--red), 10px 0 0 var(--green); margin-right: 10px; }
 .hero-visual { position: relative; min-width: 0; height: 465px; animation: rise-in .7s .12s ease both; }
 .hero-portrait { width: 100%; height: 100%; object-fit: cover; object-position: center 29%; }
+.logo-hero { object-fit: contain; padding: 26px; background: linear-gradient(135deg, #f0f3ee, #ffffff); }
 .image-caption { position: absolute; right: 0; bottom: 0; left: 0; min-height: 54px; padding: 13px 17px; display: flex; justify-content: space-between; align-items: center; gap: 12px; background: rgba(16, 61, 43, .94); color: var(--white); font-size: 11px; }
 .caption-mark { color: #d5decc; font-size: 10px; letter-spacing: 0; white-space: nowrap; }
 .hero-stamp { position: absolute; top: 27px; right: -20px; width: 106px; height: 106px; border: 1px solid var(--gold); border-radius: 50%; display: grid; place-items: center; background: var(--paper); }

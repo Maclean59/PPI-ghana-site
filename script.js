@@ -2,11 +2,27 @@ const menuToggle = document.querySelector(".menu-toggle");
 const primaryNav = document.querySelector(".primary-nav");
 
 if (menuToggle && primaryNav) {
+	const closeMenu = () => {
+		menuToggle.setAttribute("aria-expanded", "false");
+		menuToggle.setAttribute("aria-label", "Open menu");
+		primaryNav.classList.remove("is-open");
+	};
+
 	menuToggle.addEventListener("click", () => {
 		const isExpanded = menuToggle.getAttribute("aria-expanded") === "true";
 		menuToggle.setAttribute("aria-expanded", String(!isExpanded));
 		menuToggle.setAttribute("aria-label", isExpanded ? "Open menu" : "Close menu");
 		primaryNav.classList.toggle("is-open", !isExpanded);
+	});
+
+	primaryNav.querySelectorAll("a").forEach((link) => {
+		link.addEventListener("click", closeMenu);
+	});
+
+	window.addEventListener("resize", () => {
+		if (window.innerWidth > 680) {
+			closeMenu();
+		}
 	});
 }
 
